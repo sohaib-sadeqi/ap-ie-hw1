@@ -1,4 +1,3 @@
-"""Current track weather state."""
 
 
 class Weather:

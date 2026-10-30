@@ -1,4 +1,3 @@
-"""Tire components and their grip, wear, and state-restoration behavior."""
 class Tire:
     TABLE = {"DRY": 100, "WET": 60}
     CODE = "SLICK"

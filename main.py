@@ -19,11 +19,9 @@ read_input = _project_io.read_input
 write_output = _project_io.write_output
 
 
-def main(input_stream=None, output_stream=None):
-    if input_stream is None:
-        input_stream = sys.stdin
-    if output_stream is None:
-        output_stream = sys.stdout
+def main():
+    input_stream = sys.stdin
+    output_stream = sys.stdout
 
     finish_distance, _command_count, mode, command_lines = read_input(
         input_stream.read()

@@ -1,5 +1,3 @@
-"""Engine component: converts a car's health into its base output."""
-
 
 class Engine:
     def __init__(self, power):
@@ -12,7 +10,6 @@ class Engine:
         return self._power
 
     def base_output(self, health, max_health):
-        """Return power scaled by current health, using integer arithmetic."""
         if max_health <= 0:
             raise ValueError("max_health must be positive")
         health = max(0, min(health, max_health))

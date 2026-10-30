@@ -3,9 +3,7 @@ from typing import TextIO
 
 def read_input(text):
     lines = text.splitlines()
-    if not lines:
-        raise ValueError("input is empty")
-
+    
     header = lines[0].split()
     if len(header) != 3:
         raise ValueError("first line must contain L, N, and MODE")

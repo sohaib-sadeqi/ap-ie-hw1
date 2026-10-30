@@ -1,5 +1,3 @@
-"""Convert one textual command into its corresponding Command object."""
-
 from .commands import (
     CollisionCommand,
     MoveCommand,
@@ -14,7 +12,6 @@ from .commands import (
 
 
 def parse_command(line):
-    """Parse a command line and return a command object; never execute it."""
     parts = line.split()
     if not parts:
         raise ValueError("command line cannot be empty")

@@ -1,12 +1,8 @@
-"""Replaceable race-finish policies for sprint and time-attack modes."""
-
 from abc import ABC, abstractmethod
-
 from .ranking import best_active
 
 
 class RaceRule(ABC):
-    """Common contract used by Race to check intermediate and final results."""
 
     MODE = None
 
@@ -37,8 +33,6 @@ class RaceRule(ABC):
 
 
 class SprintRule(RaceRule):
-    """Finish immediately when a car's move reaches the finish distance."""
-
     MODE = "SPRINT"
 
     def after_move(self, car):
@@ -48,8 +42,6 @@ class SprintRule(RaceRule):
 
 
 class TimeAttackRule(RaceRule):
-    """Always process all commands; choose the ranked car at the end."""
-
     MODE = "TIME_ATTACK"
 
     def after_move(self, car):
@@ -58,7 +50,6 @@ class TimeAttackRule(RaceRule):
 
 
 def make_rule(mode, finish_distance):
-    """Create the selected policy from the input mode token."""
     if mode == SprintRule.MODE:
         return SprintRule(finish_distance)
     if mode == TimeAttackRule.MODE:

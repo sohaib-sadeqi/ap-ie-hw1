@@ -1,5 +1,3 @@
-"""Abstract base class for all race cars."""
-
 from abc import ABC, abstractmethod
 
 from .engine import Engine
@@ -8,8 +6,6 @@ from .turbo import TurboCharger
 
 
 class Car(ABC):
-    """Shared car state and behavior; subclasses provide their identity/ability."""
-
     def __init__(self, name, max_health, engine, turbo, attack,
                  resistance, repair_amount, repair_quota):
         if not name:
@@ -38,7 +34,7 @@ class Car(ABC):
 
     @abstractmethod
     def ability_name(self):
-        """Return a readable name for this car's special ability."""
+        # Return a readable name for this car's special ability.
         raise NotImplementedError
 
     @property
@@ -82,25 +78,21 @@ class Car(ABC):
         return self._active
 
     def is_turbo_on(self):
-        """Compatibility helper for callers that prefer an explicit query."""
         return self._turbo.is_on
 
     def modify_move_base(self, base):
-        """Hook for a subclass to change engine output before tire grip."""
         return base
 
     def modify_incoming_damage(self, raw):
-        """Hook for a subclass to change damage before health is reduced."""
         return raw
 
     def move(self, weather):
-        """Move once, consume pending turbo, and wear the current tire."""
         if not self._active:
             return 0
 
         base = self._engine.base_output(self._health, self._max_health)
         base = self.modify_move_base(base)
-        # effective_factor reads tire durability before wear, as required.
+        # effective_factor reads tire durability before wear.
         factor = self._tire.effective_factor(weather)
         drive = (base * factor) // 100
         gain = drive + self._turbo.consume()
@@ -110,7 +102,6 @@ class Car(ABC):
         return gain
 
     def activate_turbo(self):
-        """Pay the turbo cost now and keep its boost for this car's next move."""
         if not self._active or self._turbo.is_on:
             return False
 
@@ -123,7 +114,6 @@ class Car(ABC):
         return True
 
     def receive_damage(self, raw):
-        """Apply resistance/ability-adjusted damage; return whether state changed."""
         damage = self.modify_incoming_damage(raw)
         if damage <= 0:
             return False
@@ -135,7 +125,6 @@ class Car(ABC):
         return self._health != old_health
 
     def repair(self):
-        """Use one repair quota; repair never revives an eliminated car."""
         if (not self._active or self._remaining_repairs == 0
                 or self._health == self._max_health):
             return False
@@ -146,7 +135,6 @@ class Car(ABC):
         return True
 
     def pit(self, tire_code):
-        """Pay five health to fit a new tire and clear pending turbo."""
         if not self._active or self._health <= 5:
             return False
 
@@ -158,7 +146,6 @@ class Car(ABC):
         return True
 
     def snapshot(self):
-        """Return all mutable car/component state needed for undo."""
         return {
             "health": self._health,
             "distance": self._distance,
@@ -169,7 +156,6 @@ class Car(ABC):
         }
 
     def restore(self, state):
-        """Restore a snapshot, replacing tire type when it has changed."""
         tire_state = state["tire"]
         restored_tire = make_tire(tire_state["code"])
         restored_tire.restore_from(tire_state)
@@ -182,7 +168,6 @@ class Car(ABC):
         self._turbo.restore_from(state["turbo"])
 
     def _eliminate(self):
-        """Mark this car eliminated and clear any boost it can no longer use."""
         self._health = 0
         self._active = False
         self._turbo.reset()
