@@ -1,10 +1,13 @@
-"""The three concrete cars. Each one only supplies its numbers and its special ability."""
+"""Concrete car types and their individual specifications/abilities."""
+
 from .car import Car
 from .engine import Engine
-from .turbo import TurboCharger, OverboostTurbo
+from .turbo import OverboostTurbo, TurboCharger
 
 
 class VelocityCar(Car):
+    """Fast car whose engine gains power below 40% health (Last Stand)."""
+
     def __init__(self):
         super().__init__(
             name="Velocity",
@@ -21,12 +24,15 @@ class VelocityCar(Car):
         return "Last Stand"
 
     def modify_move_base(self, base):
-        if self._health < 32:
+        # Health is tested before any effects for this move; the threshold is strict.
+        if self._health < self._max_health * 40 // 100:
             return (base * 6) // 5
         return base
 
 
 class BlazeCar(Car):
+    """Car with a one-time stronger and more expensive first turbo activation."""
+
     def __init__(self):
         super().__init__(
             name="Blaze",
@@ -44,6 +50,8 @@ class BlazeCar(Car):
 
 
 class TitanCar(Car):
+    """Armored car that takes half incoming damage, rounded up."""
+
     def __init__(self):
         super().__init__(
             name="Titan",
