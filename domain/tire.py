@@ -1,4 +1,4 @@
-
+"""Tires. Each tire type is its own class with its own grip table."""
 class Tire:
     TABLE = {"DRY": 100, "WET": 60}
     CODE = "SLICK"

@@ -1,5 +1,5 @@
-
-from .engine import Engine
+"""The abstract Car. All shared behaviour lives here; each car type fills in its special ability."""
+from .engine import Engine                                                          
 from .turbo import TurboCharger
 from .tire import SlickTire, make_tire
 

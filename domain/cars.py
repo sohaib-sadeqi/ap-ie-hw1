@@ -1,4 +1,4 @@
-
+"""The three concrete cars. Each one only supplies its numbers and its special ability."""
 from .car import Car
 from .engine import Engine
 from .turbo import TurboCharger, OverboostTurbo

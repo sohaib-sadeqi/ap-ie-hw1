@@ -1,4 +1,4 @@
-
+"""Track conditions (the weather) and the Track object that remembers the current one."""
 class Weather:
     DRY = "DRY"
     WET = "WET"

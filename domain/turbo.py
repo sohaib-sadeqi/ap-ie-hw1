@@ -1,4 +1,4 @@
-
+"""Turbochargers. Each one knows its own cost/boost rules and its own on/off state."""
 class TurboCharger:
     def __init__(self, cost, boost):
         self._cost = cost
@@ -29,6 +29,7 @@ class TurboCharger:
 
 
 class OverboostTurbo(TurboCharger):
+    """Blaze's turbo: the first activation is stronger and more expensive."""
     def __init__(self):
         super().__init__(cost=10, boost=50)
         self._used = False

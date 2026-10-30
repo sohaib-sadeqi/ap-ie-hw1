@@ -1,4 +1,4 @@
-
+"""A snapshot (Memento) of a car: a read-only photo of its state at one moment."""
 from dataclasses import dataclass
 from typing import Optional
 
