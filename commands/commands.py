@@ -2,6 +2,7 @@ from .base import Command
 from race import ranking
 from domain.state import CarSnapshot
 
+
 class MoveCommand(Command):
     def __init__(self, company):
         self.company = company

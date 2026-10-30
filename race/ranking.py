@@ -1,4 +1,3 @@
-
 def _car_values(cars):
     return cars.values() if hasattr(cars, "values") else cars
 

@@ -1,4 +1,3 @@
-
 class Engine:
     def __init__(self, power):
         if power < 0:

@@ -3,7 +3,6 @@ from .ranking import best_active
 
 
 class RaceRule(ABC):
-
     MODE = None
 
     def __init__(self, finish_distance):
@@ -21,11 +20,9 @@ class RaceRule(ABC):
 
     @abstractmethod
     def after_move(self, car):
-        """Return an immediate result after a move, or None to keep racing."""
         raise NotImplementedError
 
     def final_result(self, cars):
-        """Return the distance-based final result shared by both modes."""
         winner = best_active(cars)
         if winner is None:
             return "NO WINNER"

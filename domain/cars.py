@@ -1,5 +1,3 @@
-"""Concrete car types and their individual specifications/abilities."""
-
 from .car import Car
 from .engine import Engine
 from .turbo import OverboostTurbo, TurboCharger

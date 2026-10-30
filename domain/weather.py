@@ -1,5 +1,3 @@
-
-
 class Weather:
     DRY = "DRY"
     WET = "WET"
