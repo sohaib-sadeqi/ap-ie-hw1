@@ -40,13 +40,15 @@ def main():
     for line in command_lines:
         command = parse_command(line)
         result = command.execute(race)
-        if result is not None:
+        if isinstance(result, str):
             output_lines.append(result)
+
         if race.is_finished:
             break
 
     # SPRINT sets race.is_finished on an immediate finish. Otherwise both
     # policies choose the distance-based winner after all commands are handled.
+    # If result is a boolean, it shouldn't be printed in the output
     if not race.is_finished:
         output_lines.append(rule.final_result(cars))
 

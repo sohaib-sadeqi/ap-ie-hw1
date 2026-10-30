@@ -13,8 +13,6 @@ from .commands import (
 
 def parse_command(line):
     parts = line.split()
-    if not parts:
-        raise ValueError("command line cannot be empty")
 
     command_name, *args = parts
     constructors = {
@@ -30,7 +28,7 @@ def parse_command(line):
     }
 
     if command_name not in constructors:
-        raise ValueError(f"unknown command: {command_name}")
+        raise ValueError(f"unknown command: {command_name}") 
 
     command_class, expected_args = constructors[command_name]
     if len(args) != expected_args:

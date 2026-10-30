@@ -15,7 +15,7 @@ class Race:
         return None
 
     def iter_cars(self):
-        return [car for car in self._cars if car.is_active]
+        return [self._cars[name] for name in self._cars if self._cars[name].is_active]
 
     def change_weather(self, state):
         return self.weather.change_to(state)

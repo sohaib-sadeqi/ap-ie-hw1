@@ -6,8 +6,6 @@ from .turbo import OverboostTurbo, TurboCharger
 
 
 class VelocityCar(Car):
-    """Fast car whose engine gains power below 40% health (Last Stand)."""
-
     def __init__(self):
         super().__init__(
             name="Velocity",
@@ -31,8 +29,6 @@ class VelocityCar(Car):
 
 
 class BlazeCar(Car):
-    """Car with a one-time stronger and more expensive first turbo activation."""
-
     def __init__(self):
         super().__init__(
             name="Blaze",
@@ -50,8 +46,6 @@ class BlazeCar(Car):
 
 
 class TitanCar(Car):
-    """Armored car that takes half incoming damage, rounded up."""
-
     def __init__(self):
         super().__init__(
             name="Titan",
@@ -67,5 +61,6 @@ class TitanCar(Car):
     def ability_name(self):
         return "Armor"
 
+    # Overrode the method in Car class
     def modify_incoming_damage(self, raw):
         return (raw + 1) // 2

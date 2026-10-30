@@ -3,11 +3,8 @@ from typing import TextIO
 
 def read_input(text):
     lines = text.splitlines()
-    
     header = lines[0].split()
-    if len(header) != 3:
-        raise ValueError("first line must contain L, N, and MODE")
-
+    
     finish_distance = int(header[0])
     command_count = int(header[1])
     mode = header[2]
@@ -15,9 +12,6 @@ def read_input(text):
         raise ValueError("command count cannot be negative")
 
     command_lines = lines[1:1 + command_count]
-    if len(command_lines) != command_count:
-        raise ValueError("input contains fewer command lines than N")
-
     return finish_distance, command_count, mode, command_lines
 
 
