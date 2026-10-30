@@ -8,8 +8,12 @@ class MoveCommand(Command):
         
     def execute(self, race):
         car = race.get_car(self.company)
-        car.move(race.weather.state)
-        return race.after_move(car)
+
+        def move_and_check_finish():
+            car.move(race.weather.state)
+            return race.after_move(car)
+
+        return race.run_mutation(move_and_check_finish)
 
 class TurboCommand(Command):
     def __init__(self, company):
@@ -17,7 +21,7 @@ class TurboCommand(Command):
 
     def execute(self, race):
         car = race.get_car(self.company)
-        return car.activate_turbo()
+        return race.run_mutation(car.activate_turbo)
 
 
 class CollisionCommand(Command):
@@ -26,13 +30,16 @@ class CollisionCommand(Command):
         self.target = target
 
     def execute(self, race):
-        attackerCar = race.get_car(self.attacker)
-        targetCar = race.get_car(self.target)
-        if not attackerCar.is_active or not targetCar.is_active:
-            return False
-        
-        raw = max(0, attackerCar.attack - targetCar.resistance)
-        return targetCar.receive_damage(raw)
+        attacker_car = race.get_car(self.attacker)
+        target_car = race.get_car(self.target)
+
+        def apply_collision():
+            if not attacker_car.is_active or not target_car.is_active:
+                return False
+            raw = max(0, attacker_car.attack - target_car.resistance)
+            return target_car.receive_damage(raw)
+
+        return race.run_mutation(apply_collision)
 
 class RepairCommand(Command):
     def __init__(self, company):
@@ -40,14 +47,14 @@ class RepairCommand(Command):
 
     def execute(self, race):
         car = race.get_car(self.company)
-        return car.repair()
+        return race.run_mutation(car.repair)
 
 class WeatherCommand(Command):
     def __init__(self, weather):
         self.weather = weather
         
     def execute(self, race):
-        return race.change_weather(self.weather)
+        return race.run_mutation(lambda: race.change_weather(self.weather))
 
 class PitCommand(Command):
     def __init__(self, company, tire):
@@ -56,7 +63,7 @@ class PitCommand(Command):
 
     def execute(self, race):
         car = race.get_car(self.company)
-        return car.pit(self.tire)
+        return race.run_mutation(lambda: car.pit(self.tire))
 
 class StatusCommand(Command):
     def __init__(self, company):
@@ -96,5 +103,5 @@ class UndoCommand(Command):
         pass
 
     def execute(self, race):
-        return False
+        return race.undo()
 
